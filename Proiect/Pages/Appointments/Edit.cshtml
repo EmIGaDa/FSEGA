@@ -1,0 +1,69 @@
+﻿@page
+@model Proiect.Pages.Appointments.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Appointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Appointment.ID" />
+            <div class="form-group">
+                <label asp-for="Appointment.DateTime" class="control-label"></label>
+                <input asp-for="Appointment.DateTime" class="form-control" />
+                <span asp-validation-for="Appointment.DateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Appointment.Doctor" class="control-label"></label>
+                <select asp-for="Appointment.DoctorID" class="form-control">
+                    @foreach (var item in Model.Doctors)
+                    {
+                        @if (item.DoctorId == Model.Doctor.DoctorId)
+                        {
+                            <option value="@item.DoctorId" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.DoctorId">@item.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Appointment.DoctorID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Appointment.Patient" class="control-label"></label>
+                <select asp-for="Appointment.PatientID" class="form-control">
+                    @foreach (var item in Model.Patients)
+                    {
+                        @if (item.PatientId == Model.Patient.PatientId)
+                        {
+                            <option value="@item.PatientId" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.PatientId">@item.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Appointment.PatientID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
